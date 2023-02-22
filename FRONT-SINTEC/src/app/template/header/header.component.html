@@ -1,0 +1,25 @@
+<mat-toolbar class="header mat-elevation-z4">
+    <span>
+        <a routerLink="/home">
+            <img class="logo" src="../../../../assets/img/logo.png" alt="logo">
+        </a>
+    </span>
+    <span class="menu v-middle">
+        <app-nav></app-nav>
+    </span>
+    <span class="title-group">
+        <a>
+            <!-- <i class="material-icons">
+                home
+            </i> -->
+            {{ getTitle() }}
+        </a>
+    </span>
+    <span class="logout-group">
+        <a href="#"  onclick="logout()">
+            <i class="material-icons">
+                logout
+            </i>
+        </a>
+    </span>
+</mat-toolbar>

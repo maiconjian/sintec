@@ -1,0 +1,16 @@
+<h1  style="margin-bottom: 15px;" mat-dialog-title>{{titulo}}</h1>
+<div style="text-align: left;">
+    <form autocomplete="off" #f="ngForm">
+        <div mat-dialog-content>
+            <mat-form-field id="input-data-inicio" class="input-modal">
+                <mat-label>Data Programada</mat-label>
+                <input name="dataProgramada" matInput #input [brmasker]="{mask:'00/00/0000', len:10}" [(ngModel)]="data.dataProgramada" maxlength="10" required >
+            </mat-form-field>
+        </div>
+        <div mat-dialog-actions>
+            <button  color="primary" mat-raised-button [mat-dialog-close]="data"  [disabled]="!f.valid">Confirmar</button>
+            <button  color="primary" mat-raised-button type="button" (click)="onNoClick()">Cancelar</button>
+        </div> 
+    </form>
+
+</div>

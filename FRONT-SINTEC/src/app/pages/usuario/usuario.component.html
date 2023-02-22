@@ -1,0 +1,86 @@
+<app-spinner [loading]="loading"></app-spinner>
+<div [hidden]="loading">
+  <app-header></app-header>
+  <div style="text-align: left;" class="pagina">
+    <form autocomplete="off" #f="ngForm" (ngSubmit)="pesquisar()">
+      <mat-form-field class="input-filtro">
+        <mat-label>Regional</mat-label>
+        <mat-select name="regionalFilter" [(ngModel)]="filter.idRegional" required>
+          <mat-option *ngFor="let regional of listaRegionalCarregado" [value]="regional.value">
+            {{regional.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="input-filtro" style="width: 150px !important;">
+        <mat-label>Perfil</mat-label>
+        <mat-select name="perfilFilter" [(ngModel)]="filter.idPerfil">
+          <mat-option *ngFor="let perfil of listaPerfilCarregado" [value]="perfil.value">
+            {{perfil.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="input-filtro">
+        <mat-label>Nome</mat-label>
+        <input name="nomeFilter" matInput #input maxlength="50" [(ngModel)]="filter.nome">
+      </mat-form-field>
+
+      <mat-form-field class="input-filtro" style="width: 100px !important;">
+        <mat-label>Situacao</mat-label>
+        <mat-select name="ativoFilter" [(ngModel)]="filter.ativo" required>
+          <mat-option *ngFor="let situacao of listaSituacaoCarregado" [value]="situacao.value">
+            {{situacao.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button  color="primary" mat-raised-button type="button" (click)="limparFiltro()">Limpar</button>
+      <button  color="primary" mat-raised-button type="submit" [disabled]="!f.valid">Pesquisar</button>
+      <button  color="primary" mat-raised-button type="button" (click)="novo()">Novo</button>
+    </form>
+  </div>
+
+  <div class="mat-elevation-z8" id="div-tab">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="cpf">
+        <th mat-header-cell *matHeaderCellDef> CPF </th>
+        <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
+      </ng-container>
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef> NOME</th>
+        <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> E-MAIL</th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+      <ng-container matColumnDef="perfil">
+        <th mat-header-cell *matHeaderCellDef> PERFIL</th>
+        <td mat-cell *matCellDef="let element"> {{element.perfil.nome}} </td>
+      </ng-container>
+      <ng-container matColumnDef="opcao">
+        <th mat-header-cell *matHeaderCellDef> OPCAO </th>
+        <td mat-cell *matCellDef="let element">
+          <button class="btn-opcao" color="primary" matTooltip="Alterar" matTooltipPosition="left"
+            (click)="editar(element)" *ngIf="element.ativo == 1">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button class="btn-opcao" color="primary" (click)="confirmDialogResetSenha(element.id)"
+            *ngIf="element.ativo == 1" matTooltip="RESET SENHA" matTooltipPosition="left">
+            <mat-icon>lock_reset</mat-icon>
+          </button>
+          <button class="btn-opcao" (click)="confirmDialog(element)"
+            matTooltip="{{element.ativo == 1 ? 'Desativar':'Ativar'}}" matTooltipPosition="left">
+            <mat-icon *ngIf="element.ativo == 1 ? false: true">done_outline</mat-icon>
+            <mat-icon *ngIf="element.ativo == 0 ? false: true">close</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+  </div>
+
+
+</div>

@@ -1,0 +1,40 @@
+#foto {
+    margin-top: 5%;
+}
+
+img {
+    height: 100%;
+    /* tamanho da imagem*/
+    width: 100%;
+    // margin-left: 15%;
+}
+
+.btn-foto {
+    margin-bottom: 5px !important;
+    margin-left: 30% !important;
+}
+
+.lbl-index-photo {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+#info{
+    width: 80%;
+    height: 80%;
+    padding-top: 50%;
+}
+
+@media screen and (max-width: 1700px) {
+    img {
+        height: 70%;
+        /* tamanho da imagem*/
+        width: 70%;
+        margin-left: 15%;
+    }
+    #info{
+        width: 80%;
+        height: 80%;
+        padding-top: 40%;
+    }
+}

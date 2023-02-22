@@ -1,0 +1,111 @@
+<div style="text-align: left;">
+    <div style="margin-top:  0 !important; padding-top: 0 !important; float: right;">
+        <button class="btn-opcao" name="fechar" type="button" (click)="onNoClick()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-tab-group>
+        <mat-tab label="Informação">
+            <fieldset style="margin-top: 5px;">
+                <legend>Serviço</legend>
+                <mat-form-field id="input-codigo" class="input-modal">
+                    <mat-label>Codigo</mat-label>
+                    <input name="codigo" matInput readonly [(ngModel)]="data.codigoServico">
+                </mat-form-field>
+                <mat-form-field id="input-colaborador" class="input-modal">
+                    <mat-label>Colaborador</mat-label>
+                    <input name="nomeColaborador" matInput readonly [(ngModel)]="data.nomeColaborador">
+                </mat-form-field>
+                <mat-form-field id="input-placa" class="input-modal">
+                    <mat-label>Placa</mat-label>
+                    <input name="placa" matInput readonly [(ngModel)]="data.placa">
+                </mat-form-field>
+                <mat-form-field id="input-local" class="input-modal">
+                    <mat-label>Local</mat-label>
+                    <input name="local" matInput readonly [(ngModel)]="data.nomeImovel">
+                </mat-form-field>
+
+                <mat-form-field id="input-data-solicitacao" class="input-modal">
+                    <mat-label>Data Solicitacao</mat-label>
+                    <input name="dataSolicitacao" matInput readonly [(ngModel)]="dataSolicitacao">
+                </mat-form-field>
+
+                <mat-form-field id="input-data-programada" class="input-modal">
+                    <mat-label>Data Programada</mat-label>
+                    <input name="dataProgramda" matInput readonly [(ngModel)]="dataProgramada">
+                </mat-form-field>
+            </fieldset>
+
+            <fieldset style="margin-top: 5px;">
+                <legend>Execução</legend>
+                <mat-form-field id="input-usuario" class="input-modal">
+                    <mat-label>Usuario</mat-label>
+                    <input name="usuario" matInput readonly [(ngModel)]="data.nomeUsuario">
+                </mat-form-field>
+                <mat-form-field id="input-data-execucao" class="input-modal">
+                    <mat-label>Data Execucao</mat-label>
+                    <input name="dataExecucao" matInput readonly [(ngModel)]="dataExecucao">
+                </mat-form-field>
+
+                <mat-form-field id="input-ocorrencia" class="input-modal">
+                    <mat-label>Ocorrencia</mat-label>
+                    <input name="ocorrencia" matInput readonly [(ngModel)]="data.nomeOcorrencia">
+                </mat-form-field>
+            </fieldset>
+        </mat-tab>
+        <mat-tab label="Questionario">
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource">
+                    <!-- <ng-container matColumnDef="titulo">
+                        <th mat-header-cell *matHeaderCellDef> QUESTIONARIO </th>
+                        <td mat-cell *matCellDef="let element"> {{element.tituloQuestionario}} </td>
+                    </ng-container> -->
+                    <ng-container matColumnDef="enunciado">
+                        <th mat-header-cell *matHeaderCellDef>ENUNCIADO</th>
+                        <td mat-cell *matCellDef="let element"> {{element.enunciado}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="resposta">
+                        <th mat-header-cell *matHeaderCellDef>RESPOSTA</th>
+                        <td mat-cell *matCellDef="let element"> {{element.resposta}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="nconf">
+                        <th mat-header-cell *matHeaderCellDef>NÃO CONFORMIDADE</th>
+                        <td mat-cell *matCellDef="let element"> {{element.nconf == 1 ? 'SIM' : 'NÃO' }} </td>
+                    </ng-container>
+                    <!-- <ng-container matColumnDef="opcao">
+                        <th mat-header-cell *matHeaderCellDef> OPCAO </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button class="btn-opcao"  name="foto" matTooltip="Foto"
+                            matTooltipPosition="left" (click)="openDialogFoto(element)" [hidden]="element.pathFoto == null">
+                            <mat-icon>photo_camera</mat-icon>
+                        </button>
+                        </td>
+                    </ng-container> -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    <ng-container matColumnDef="groupHeader">
+                        <td colspan="999" mat-cell *matCellDef="let group">
+                            <mat-icon *ngIf="group.expanded">expand_less</mat-icon>
+                            <mat-icon *ngIf="!group.expanded">expand_more</mat-icon>
+                            <strong>{{group[groupByColumns[group.level-1]]}}</strong>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup"
+                        (click)="groupHeaderClick(row)"> </tr>
+
+                </table>
+                <!-- <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator> -->
+            </div>
+        </mat-tab>
+        <mat-tab label="Fotos">
+           <app-modal-foto [imagesRecebidas]="images" ></app-modal-foto>
+        </mat-tab>
+        <mat-tab label="Assinatura">
+            <div>
+                <img id="assinatura" src="{{pathAssinatura}}" >
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

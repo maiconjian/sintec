@@ -1,0 +1,85 @@
+<h1 style="margin-bottom: 15px;" mat-dialog-title>{{titulo}}</h1>
+<div style="text-align: left;">
+    <form autocomplete="off" #f="ngForm">
+        <div mat-dialog-content>
+            <mat-form-field id="input-matricula" class="input-modal">
+                <mat-label>Matricula</mat-label>
+                <input name="matricula" matInput type="number" [(ngModel)]="colaborador.matricula"
+                min="0" maxlength="10" 
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-nome" class="input-modal">
+                <mat-label>Nome</mat-label>
+                <input name="nome" matInput #input [(ngModel)]="colaborador.nome" maxlength="200" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-cpf" class="input-modal">
+                <mat-label>CPF</mat-label>
+                <input name="cpf" matInput #input [brmasker]="{person: true}" (blur)="validarCpf()" [(ngModel)]="colaborador.cpf"
+                    maxlength="14" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-nascimento" class="input-modal">
+                <mat-label>Data Nascimento</mat-label>
+                <input name="dataNascimentoCad" [brmasker]="{mask:'00/00/0000', len:10}" minlength="10"  placeholder="dd/mm/aaaa"
+                    matInput #input [(ngModel)]="colaborador.dataNascimento" maxlength="18" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-admissao" class="input-modal">
+                <mat-label>Data Admissao</mat-label>
+                <input name="admissaoCad" placeholder="dd/mm/aaaa" [brmasker]="{mask:'00/00/0000', len:10}" minlength="10"  matInput
+                    #input [(ngModel)]="colaborador.dataAdmissao" maxlength="18" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-cnh" class="input-modal">
+                <mat-label>CNH</mat-label>
+                <input name="cnh" matInput #input type="number" [(ngModel)]="colaborador.cnh" min="0" maxlength="18" 
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            </mat-form-field>
+
+            <mat-form-field id="drop-categoria-cnh">
+                <mat-label>Categoria CNH</mat-label>
+                <mat-select name="categoriaCnhCad" [(ngModel)]="colaborador.categoriaCnh">
+                    <mat-option value="A">A</mat-option>
+                    <mat-option value="B">B</mat-option>
+                    <mat-option value="AB">AB</mat-option>
+                    <mat-option value="C">C</mat-option>
+                    <mat-option value="D">D</mat-option>
+                    <mat-option value="E">E</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field id="input-validade-cnh" class="input-modal">
+                <mat-label>Validade CNH</mat-label>
+                <input name="validadeCnh" placeholder="dd/mm/aaaa" [brmasker]="{mask:'00/00/0000', len:10}" matInput 
+                    #input [(ngModel)]="colaborador.dataValidadeCnh" maxlength="18">
+            </mat-form-field>
+
+            <mat-form-field id="drop-regional"  class="input-modal">
+                <mat-label>Regional</mat-label>
+                <mat-select name="regionalCad" [(ngModel)]="regional.id" 
+                    required>
+                    <mat-option *ngFor="let regional of listaRegionalCarregado" [value]="regional.value">
+                        {{regional.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- <mat-form-field id="drop-localidade" class="input-modal" >
+                <mat-label>Localidade</mat-label>
+                <mat-select name="localidadeCad" [(ngModel)]="localidade.id" required>
+                    <mat-option *ngFor="let localidade of listaLocalidadeCarregado" [value]="localidade.value">
+                        {{localidade.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> -->
+
+        </div>
+        <div mat-dialog-actions>
+            <button  color="primary" mat-raised-button (click)="montarObj()" [mat-dialog-close]="data"
+                [disabled]="!f.valid">Confirmar</button>
+            <button  color="primary" mat-raised-button type="button" (click)="onNoClick()">Cancelar</button>
+        </div>
+    </form>
+</div>

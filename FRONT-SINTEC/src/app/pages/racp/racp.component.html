@@ -1,0 +1,112 @@
+<app-spinner [loading]="loading"></app-spinner>
+
+<div [hidden]="loading">
+    <app-header></app-header>
+    <div style="text-align: left;" class="pagina">
+        <form autocomplete="off" #f="ngForm" (ngSubmit)="pesquisar()">
+            <mat-form-field id="input-ref" class="input-modal">
+                <mat-label>Ref.</mat-label>
+                <input name="admissaoCad" placeholder="mm/aaaa" [brmasker]="{mask:'00/0000', len:7}" minlength="7"
+                    matInput #input [(ngModel)]="dataAnoMesRef" maxlength="7" required>
+            </mat-form-field>
+
+            <mat-form-field class="input-filtro">
+                <mat-label>Regional</mat-label>
+                <mat-select name="regionalFilter" [(ngModel)]="filter.idRegional"
+                    (selectionChange)="carregarTipoServico()" required>
+                    <mat-option *ngFor="let regional of listaRegionalCarregado" [value]="regional.value">
+                        {{regional.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="input-filtro" style="width: 180px !important;" >
+                <mat-label>Tipo Serviço</mat-label>
+                <mat-select name="tipoServicoCad" [(ngModel)]="filter.idTipoServico"  [disabled]="filter.idRegional == null"  required>
+                    <mat-option *ngFor="let tipoServico of listaTipoServicoCarregado" [value]="tipoServico.value">
+                        {{tipoServico.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field id="input-ndias" class="input-modal">
+                <mat-label>Codigo Racp</mat-label>
+                <input name="codigoRacp" type="number" matInput #inputNdias [(ngModel)]="filter.codigoRacp" 
+                min="0" maxlength="20"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            </mat-form-field>
+
+            <mat-form-field id="input-ndias" class="input-modal">
+                <mat-label>Codigo Serviço</mat-label>
+                <input name="codigoServico" type="number" matInput #inputNdias [(ngModel)]="filter.codigoServico" 
+                min="0" maxlength="20"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            </mat-form-field>
+
+            <mat-form-field class="input-filtro">
+                <mat-label>Situação</mat-label>
+                <mat-select name="situacaoFilter" [(ngModel)]="filter.idSituacaoRacp" required>
+                    <mat-option *ngFor="let situacao of listaSituacaoRacpCarregado" [value]="situacao.value">
+                        {{situacao.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+          
+
+            <button class="btn" color="primary" mat-raised-button type="button" (click)="limparFiltro()">Limpar</button>
+            <button class="btn" color="primary" mat-raised-button type="submit" [disabled]="!f.valid">Pesquisar</button>
+        </form>
+    </div>
+
+    <div class="mat-elevation-z8" id="div-tab">
+        <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="codigoRacp">
+                <th mat-header-cell *matHeaderCellDef> CODIGO RACP </th>
+                <td mat-cell *matCellDef="let element"> {{element.codigoRacp}} </td>
+            </ng-container>
+            <ng-container matColumnDef="codigoServico">
+                <th mat-header-cell *matHeaderCellDef> CODIGO SERVIÇO </th>
+                <td mat-cell *matCellDef="let element"> {{element.servico.codigo}} </td>
+            </ng-container>
+            <ng-container matColumnDef="colaborador">
+                <th mat-header-cell *matHeaderCellDef>COLABORADOR</th>
+                <td mat-cell *matCellDef="let element"> {{element.servico.colaborador.nome}} </td>
+            </ng-container>
+            <ng-container matColumnDef="placa">
+                <th mat-header-cell *matHeaderCellDef>VEICULO</th>
+                <td mat-cell *matCellDef="let element"> {{element.servico.veiculo != null ? element.servico.veiculo.placa : ""}} </td>
+            </ng-container>
+            <ng-container matColumnDef="imovel">
+                <th mat-header-cell *matHeaderCellDef>LOCAL</th>
+                <td mat-cell *matCellDef="let element"> {{element.servico.imovel != null ? element.servico.imovel.nome : ""}} </td>
+            </ng-container>
+            <ng-container matColumnDef="dataGerada">
+                <th mat-header-cell *matHeaderCellDef>DATA GERADA</th>
+                <td mat-cell *matCellDef="let element"> {{element.dataGeracao | date:'dd/MM/yyyy'}} </td>
+            </ng-container>
+            <!-- <ng-container matColumnDef="dataProgramada">
+                <th mat-header-cell *matHeaderCellDef>DATA PROGRAMADA</th>
+                <td mat-cell *matCellDef="let element"> {{element.dataProgramada | date:'dd/MM/yyyy'}} </td>
+            </ng-container> -->
+            <ng-container matColumnDef="dataExecucao">
+                <th mat-header-cell *matHeaderCellDef>EXECUTADO</th>
+                <td mat-cell *matCellDef="let element"> {{element.dataExecucao | date:'dd/MM/yyyy'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="opcao">
+                <th mat-header-cell *matHeaderCellDef> OPCAO </th>
+                <td mat-cell *matCellDef="let element">
+                    <button class="btn-opcao" color="primary" matTooltip="NCONF" matTooltipPosition="left"
+                      (click)="openDialog(element.id)">
+                      <mat-icon>fact_check</mat-icon>
+                    </button>
+                  </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+    </div>
+
+
+</div>

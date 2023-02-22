@@ -1,0 +1,41 @@
+<h1  style="margin-bottom: 15px;" mat-dialog-title>{{titulo}}</h1>
+
+<div style="text-align: left;">
+    <form autocomplete="off" #f="ngForm">
+        <div mat-dialog-content>
+            <mat-form-field id="input-titulo" class="input-modal">
+                <mat-label>Titulo</mat-label>
+                <input name="titulo" matInput #input [(ngModel)]="data.titulo"  (ngModelChange)="data.titulo = $event.toUpperCase()" maxlength="200" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-ordem" class="input-modal">
+                <mat-label>Ordem </mat-label>
+                <input name="ordem" matInput #input type="number" [(ngModel)]="data.ordemApresentacao" min="0" maxlength="3" 
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
+            </mat-form-field>
+            <mat-form-field id="drop-contrato" class="input-filtro">
+                <mat-label>Contrato</mat-label>
+                <mat-select name="contratoCad" [(ngModel)]="contrato.id"
+                    (selectionChange)="carregarTipoServico()" required>
+                    <mat-option *ngFor="let contrato of listaContratoCarregado" [value]="contrato.value">
+                        {{contrato.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field id="drop-tp-servico" class="input-filtro">
+                <mat-label>Tipo Serviço</mat-label>
+                <mat-select name="tipoServicoCad" [(ngModel)]="tipoServico.id" required>
+                    <mat-option *ngFor="let tipoServico of listaTipoServicoCarregado" [value]="tipoServico.value">
+                        {{tipoServico.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div mat-dialog-actions>
+            <button  color="primary" mat-raised-button (click)="montarObj()" [mat-dialog-close]="data"  [disabled]="!f.valid">Confirmar</button>
+            <button  color="primary" mat-raised-button type="button" (click)="onNoClick()">Cancelar</button>
+        </div>
+    </form>
+
+</div>

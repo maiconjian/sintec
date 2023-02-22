@@ -1,0 +1,137 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>menu</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item routerLink="/painel-config">
+    <mat-icon>person</mat-icon>
+    <span>Admin</span>
+  </button>
+
+  <button mat-menu-item routerLink="/home" *hasPermission="['Gestor','Administrador','DESENVOLVEDOR']; op 'OR'">
+    <mat-icon>home</mat-icon>
+    <span>Home</span>
+  </button>
+
+  <button class="menu-item-btn" mat-menu-item [matMenuTriggerFor]="administrativo">
+    <mat-icon>admin_panel_settings</mat-icon>
+    <span>Administrativo</span>
+  </button>
+  <mat-menu #administrativo="matMenu">
+    <button mat-menu-item routerLink="/questionario">
+      <mat-icon>description</mat-icon>
+      <span>Questionario</span>
+    </button>
+    <button mat-menu-item routerLink="/usuario">
+      <mat-icon>person</mat-icon>
+      <span>Usuario</span>
+    </button>
+    <button mat-menu-item routerLink="/empresa" *hasPermission="['ADMINISTRADOR','DESENVOLVEDOR']; op 'OR'">
+      <mat-icon>apartment</mat-icon>
+      <span>Empresa</span>
+    </button>
+    <button mat-menu-item routerLink="/contrato">
+      <mat-icon>gavel</mat-icon>
+      <span>Contrato</span>
+    </button>
+    <button mat-menu-item routerLink="/tipo-servico">
+      <mat-icon>format_list_bulleted</mat-icon>
+      <span>Tipo Serviço</span>
+    </button>
+    <button mat-menu-item routerLink="/regional">
+      <mat-icon>public</mat-icon>
+      <span>Regional</span>
+    </button>
+    <button mat-menu-item routerLink="/localidade">
+      <mat-icon>local_activity</mat-icon>
+      <span>Imovel</span>
+    </button>
+    <button mat-menu-item routerLink="/colaborador">
+      <mat-icon>groups_3</mat-icon>
+      <span>Colaborador</span>
+    </button>
+    <button mat-menu-item routerLink="/veiculo">
+      <mat-icon>directions_car</mat-icon>
+      <span>Veiculo</span>
+    </button>
+  </mat-menu>
+
+  <button class="menu-item-btn" mat-menu-item [matMenuTriggerFor]="operacional">
+    <mat-icon>group_work</mat-icon>
+    <span>Operacional</span>
+  </button>
+  <mat-menu #operacional="matMenu">
+    <button mat-menu-item routerLink="/agenda">
+      <mat-icon>event</mat-icon>
+      <span>Agenda</span>
+    </button>
+    <button mat-menu-item routerLink="/distribuicao">
+      <mat-icon>open_with</mat-icon>
+      <span>Distribuição</span>
+    </button>
+    <button mat-menu-item routerLink="/liberacao">
+      <mat-icon>lock_open</mat-icon>
+      <span>Liberação</span>
+    </button>
+    <button mat-menu-item routerLink="/retorno-servico">
+      <mat-icon>work_history</mat-icon>
+      <span>Retorno</span>
+    </button>
+    <button mat-menu-item routerLink="/racp">
+      <mat-icon>format_list_bulleted</mat-icon>
+      <span>Racp</span>
+    </button>
+  </mat-menu>
+
+
+  <button class="menu-item-btn" mat-menu-item [matMenuTriggerFor]="relatorio">
+    <mat-icon>description</mat-icon>
+    <span>Relatorios</span>
+  </button>
+  <mat-menu #relatorio="matMenu">
+    <!-- <button mat-menu-item routerLink="/auditoria">
+      <mat-icon>preview</mat-icon>
+      <span>Auditoria</span>
+    </button>
+    <button mat-menu-item routerLink="/jornada-colaborador">
+      <mat-icon>mode_of_travel</mat-icon>
+      <span>Jornada Colaborador</span>
+    </button>
+    <button mat-menu-item routerLink="/produtividade-usuario">
+      <mat-icon>laptop_mac</mat-icon>
+      <span>Produtividade Usuario</span>
+    </button> -->
+  </mat-menu>
+
+
+  <button class="menu-item-btn" mat-menu-item [matMenuTriggerFor]="analise">
+    <mat-icon>analytics</mat-icon>
+    <span>Analise</span>
+  </button>
+  <mat-menu #analise="matMenu">
+    <!-- <button mat-menu-item routerLink="/resulta-leitura">
+      <mat-icon>stacked_bar_chart</mat-icon>
+      <span>Resultado Leitura</span>
+    </button> -->
+  </mat-menu>
+
+  <button class="menu-item-btn" mat-menu-item [matMenuTriggerFor]="config">
+    <mat-icon>settings</mat-icon>
+    <span>Configuracao</span>
+  </button>
+  <mat-menu #config="matMenu">
+    <button mat-menu-item routerLink="/senha-usuario">
+      <mat-icon>password</mat-icon>
+      <span>Alterar Senha</span>
+    </button>
+    <button mat-menu-item routerLink="/config-mobile">
+      <mat-icon>phonelink_setup</mat-icon>
+      <span>Configuração Mobile</span>
+    </button>
+  </mat-menu>
+
+  <button mat-menu-item routerLink="/">
+    <mat-icon>logout</mat-icon>
+    <span>Sair</span>
+  </button>
+</mat-menu>

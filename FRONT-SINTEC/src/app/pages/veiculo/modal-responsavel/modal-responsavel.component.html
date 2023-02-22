@@ -1,0 +1,24 @@
+<h1  style="margin-bottom: 15px;" mat-dialog-title>Alterar Responsavel</h1>
+
+<div style="text-align: left;">
+    <form autocomplete="off" #f="ngForm">
+        <div mat-dialog-content>
+              <mat-form-field class="input-filtro">
+                <mat-label>Responsavel</mat-label>
+                <mat-select name="colaborador" [(ngModel)]="colaborador.id" (focus)="resetDropColaborador(); filterplc.value = ''" required>
+                  <input class="input-search" matInput placeholder=" Buscar..." autocomplete="off" 
+                  #filterplc (input)="searchColaboradorDropdown($event.target.value)">
+                  <mat-option *ngFor="let colaborador of listaColaboradorCarregado" [value]="colaborador.value">
+                    {{colaborador.label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+        </div>
+        <div mat-dialog-actions>
+            <button  color="primary" mat-raised-button [disabled]="!f.valid" (click)="montarObj()" [mat-dialog-close]="data">Confirmar</button>
+            <button  color="primary" mat-raised-button type="button" (click)="onNoClick()">Cancelar</button>
+        </div>
+    </form>
+
+</div>

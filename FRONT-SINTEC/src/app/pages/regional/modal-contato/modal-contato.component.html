@@ -1,0 +1,27 @@
+<h1  style="margin-bottom: 15px;" mat-dialog-title>{{titulo}}</h1>
+<div style="text-align: left;">
+    <form autocomplete="off" #f="ngForm">
+        <div mat-dialog-content>
+              <mat-form-field id="input-nome" class="input-modal">
+                <mat-label>Nome</mat-label>
+                <input name="codigo" matInput #input [(ngModel)]="data.nome" maxlength="10" >
+            </mat-form-field>
+
+            <mat-form-field id="input-email" class="input-modal">
+                <mat-label>E-mail</mat-label>
+                <input name="email" matInput #input [(ngModel)]="data.email" maxlength="200" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-funcao" class="input-modal">
+                <mat-label>Funcao</mat-label>
+                <input name="funcao" matInput #input [(ngModel)]="data.funcao" maxlength="200" required>
+            </mat-form-field>
+
+        </div>
+        <div mat-dialog-actions>
+            <button  color="primary" mat-raised-button [mat-dialog-close]="data"  [disabled]="!f.valid">Confirmar</button>
+            <button  color="primary" mat-raised-button type="button" (click)="onNoClick()">Cancelar</button>
+        </div> 
+    </form>
+
+</div>

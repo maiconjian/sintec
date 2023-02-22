@@ -1,0 +1,27 @@
+<h1  style="margin-bottom: 15px;" mat-dialog-title>{{titulo}}</h1>
+<div style="text-align: left;">
+    <form autocomplete="off" #f="ngForm">
+        <div mat-dialog-content>
+            <mat-form-field id="drop-contrato"  >
+                <mat-label>Contrato</mat-label>
+                <mat-select name="contratoFilter" [(ngModel)]="contrato.id" required>
+                  <mat-option *ngFor="let contrato of listaContratoCarregado" [value]="contrato.value">
+                    {{contrato.label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            <mat-form-field id="input-nome" class="input-modal">
+                <mat-label>Nome</mat-label>
+                <input name="nome" matInput #input [(ngModel)]="data.nome" 
+                (ngModelChange)="data.nome = $event.toUpperCase()" maxlength="200" required>
+            </mat-form-field>
+
+        </div>
+        <div mat-dialog-actions>
+            <button  color="primary" mat-raised-button (click)="montarObj()" [mat-dialog-close]="data"  [disabled]="!f.valid">Confirmar</button>
+            <button  color="primary" mat-raised-button type="button" (click)="onNoClick()">Cancelar</button>
+        </div> 
+    </form>
+
+</div>

@@ -1,0 +1,74 @@
+<h1  style="margin-bottom: 15px;" mat-dialog-title>{{titulo}}</h1>
+
+<div style="text-align: left;">
+    <form autocomplete="off" #f="ngForm">
+        <div mat-dialog-content>
+            <mat-form-field class="input-filtro">
+                <mat-label>Regional</mat-label>
+                <mat-select name="regionalFilter" [(ngModel)]="regional.id"
+                  (selectionChange)="getListaColaborador()" required>
+                  <mat-option *ngFor="let regional of data.listaRegionalCarregado" [value]="regional.value">
+                    {{regional.label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="input-filtro">
+                <mat-label>Responsavel</mat-label>
+                <mat-select name="colaborador" [(ngModel)]="colaborador.id" (focus)="resetDropColaborador(); filterplc.value = ''" required>
+                  <input class="input-search" matInput placeholder=" Buscar..." autocomplete="off" 
+                  #filterplc (input)="searchColaboradorDropdown($event.target.value)">
+                  <mat-option *ngFor="let colaborador of listaColaboradorCarregado" [value]="colaborador.value">
+                    {{colaborador.label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="input-filtro">
+                <mat-label>Tipo Veiculo</mat-label>
+                <mat-select name="categoriaVeiculoFilter" [(ngModel)]="categoriaVeiculo.id"
+                  required>
+                  <mat-option *ngFor="let categoriaVeiculo of data.listaCategoriaVeiculoCarregado" [value]="categoriaVeiculo.value">
+                    {{categoriaVeiculo.label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field id="vencimento-doc" class="input-modal">
+                <mat-label>Vencimento Documento</mat-label>
+                <input name="vencimentoDoc" placeholder="mm/aaaa" [brmasker]="{mask:'00/0000', len:7}" minlength="7" matInput
+                  #input [(ngModel)]="data.dataVencimentoDoc" required>
+              </mat-form-field>
+
+              <mat-form-field id="placa"  class="input-modal">
+                <mat-label>Placa</mat-label>
+                <input name="placaCad"  minlength="7" matInput
+                   [(ngModel)]="data.placa" (ngModelChange)="data.placa = $event.toUpperCase()" minlength="7" maxlength="7" required>
+              </mat-form-field>
+              <mat-form-field id="modelo" class="input-modal">
+                <mat-label>Modelo</mat-label>
+                <input name="modeloCad" maxlength="100" matInput
+                   [(ngModel)]="data.modelo" (ngModelChange)="data.modelo = $event.toUpperCase()" required>
+              </mat-form-field>
+
+              <mat-form-field id="cor" class="input-modal">
+                <mat-label>Cor</mat-label>
+                <input name="corCad" maxlength="50" matInput
+                   [(ngModel)]="data.cor" (ngModelChange)="data.cor = $event.toUpperCase()" required>
+              </mat-form-field>
+
+              <mat-form-field id="ano" class="input-modal">
+                <mat-label>Ano</mat-label>
+                <input name="anoCad" placeholder="Ex: 1990"  minlength="4" maxlength="4" matInput   [brmasker]="{type:'num'}"
+                  [(ngModel)]="data.ano" required>
+              </mat-form-field>
+
+           
+        </div>
+        <div mat-dialog-actions>
+            <button  color="primary" mat-raised-button [disabled]="!f.valid"  (click)="montarUsuario()" [mat-dialog-close]="data">Confirmar</button>
+            <button  color="primary" mat-raised-button type="button" (click)="onNoClick()">Cancelar</button>
+        </div>
+    </form>
+
+</div>

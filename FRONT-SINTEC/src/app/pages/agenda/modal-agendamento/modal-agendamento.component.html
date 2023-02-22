@@ -1,0 +1,81 @@
+<h1  style="margin-bottom: 15px;" mat-dialog-title>Agendamento</h1>
+<div style="text-align: left;">
+    <div mat-dialog-content>
+        <div>
+            <form autocomplete="off" #f="ngForm">
+                <mat-form-field class="input-filtro">
+                    <mat-label>Regional</mat-label>
+                    <mat-select name="regional" [(ngModel)]="dto.idRegional"
+                        (selectionChange)="carregarTipoServico();exibirTabela()" required>
+                        <mat-option *ngFor="let regional of listaRegionalCarregado" [value]="regional.value">
+                            {{regional.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field  class="input-modal"  id="input-categoria" >
+                    <mat-label>Categoria</mat-label>
+                    <mat-select name="categoria" [(ngModel)]="dto.idCategoriaTipoServico"
+                    (selectionChange)="carregarTipoServico();exibirTabela()" required>
+                        <mat-option *ngFor="let categoria of listaCategoriaTipoServico" [value]="categoria.value">
+                            {{categoria.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field  class="input-modal"  id="input-categoria" >
+                    <mat-label>Tipo Serviço</mat-label>
+                    <mat-select name="tipoServico" [(ngModel)]="dto.idTipoServico" required>
+                        <mat-option *ngFor="let tipoServico of listaTipoServicoCarregado" [value]="tipoServico.value">
+                            {{tipoServico.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field id="input-datasolicitacao" class="input-modal">
+                    <mat-label>Data Solicitacao</mat-label>
+                    <input name="dataCad" placeholder="dd/mm/aaaa" [brmasker]="{mask:'99/99/9999', len:10}" minlength="10"
+                        matInput #input [(ngModel)]="dataSolicitacao" maxlength="10" required>
+                </mat-form-field>
+
+                <mat-form-field id="input-ndias" class="input-modal">
+                    <mat-label>N° Dias Programado</mat-label>
+                    <input name="ndiasprogramado" type="number" matInput #inputNdias [(ngModel)]="dto.numDiasAgendamento" 
+                    min="0" maxlength="3"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                </mat-form-field>
+            </form>
+        </div>
+
+        <div [hidden]="!exibirTabelaColaborador">
+            <app-lista-colaborador 
+            [exibirTabelaColaborador]="exibirTabelaColaborador"
+            [idRegional]="dto.idRegional"
+            (enviarListaSelecionada)="getSelecionados($event)"
+            ></app-lista-colaborador>
+        </div>
+
+        <div [hidden]="!exibirTabelaImovel">
+            <app-lista-imovel 
+            [exibirTabelaImovel]="exibirTabelaImovel"
+            [idRegional]="dto.idRegional"
+            (enviarListaSelecionada)="getSelecionados($event)"
+            ></app-lista-imovel>
+        </div>
+
+        <div [hidden]="!exibirTabelaVeiculo">
+            <app-lista-veiculo 
+            [exibirTabelaVeiculo]="exibirTabelaVeiculo"
+            [idRegional]="dto.idRegional"
+            (enviarListaSelecionada)="getSelecionados($event)"
+            ></app-lista-veiculo>
+        </div>
+    </div>
+
+    <div mat-dialog-actions>
+        <button  color="primary" mat-raised-button  [disabled]="!f.valid || tamanhoListaRecebida == 0" (click)="montarObj()" [mat-dialog-close]="data">Confirmar</button>
+        <button  color="primary" mat-raised-button type="button" (click)="onNoClick()">Cancelar</button>
+    </div> 
+</div>
+
+

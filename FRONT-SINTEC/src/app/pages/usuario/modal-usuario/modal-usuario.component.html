@@ -1,0 +1,59 @@
+<h1  style="margin-bottom: 15px;" mat-dialog-title>{{titulo}}</h1>
+
+<div style="text-align: left;">
+    <form autocomplete="off" #f="ngForm">
+        <div mat-dialog-content>
+            <mat-form-field id="input-matricula" class="input-modal">
+                <mat-label>Matricula</mat-label>
+                <input name="matricula" matInput #input [(ngModel)]="data.matricula" maxlength="10" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-nome" class="input-modal">
+                <mat-label>Nome</mat-label>
+                <input name="nome" matInput #input [(ngModel)]="data.nome" maxlength="200" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-cpf" class="input-modal">
+                <mat-label>CPF</mat-label>
+                <input name="CPF" matInput #input [brmasker]="{person: true}" [(ngModel)]="data.cpf" maxlength="14" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-email" class="input-modal">
+                <mat-label>E-mail</mat-label>
+                <input name="email" matInput #input [(ngModel)]="data.email" maxlength="100" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-login" class="input-modal">
+                <mat-label>Login</mat-label>
+                <input name="login" matInput #input [(ngModel)]="data.login" maxlength="50" required>
+            </mat-form-field>
+           
+            <mat-form-field id="input-perfil" class="input-modal">
+                <mat-label>Perfil</mat-label>
+                <mat-select name="perfil" [(ngModel)]="perfil.id" required>
+                    <mat-option *ngFor="let perfil of listaPerfilCarregado" [value]="perfil.value">
+                        {{perfil.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field id="input-regional" class="input-modal">
+                <mat-label>Regional</mat-label>
+                <mat-select name="ativoFilter" [(ngModel)]="regionaisSelecionadas" multiple (focus)="resetDropRegional(); filterplc.value = ''"  required>
+                  <input class="input-search" matInput placeholder="Buscar..." autocomplete="off" 
+                  #filterplc (input)="searchRegionalDropdown($event.target.value)" style="padding-left: 10px;">
+                    <mat-option *ngFor="let regional of listaRegionalCarregado" [value]="regional.value">
+                        {{regional.label}}
+                      </mat-option>
+                </mat-select>
+            </mat-form-field>
+           
+
+        </div>
+        <div mat-dialog-actions>
+            <button  color="primary" mat-raised-button [disabled]="!f.valid"  (click)="montarUsuario()" [mat-dialog-close]="data">Confirmar</button>
+            <button  color="primary" mat-raised-button type="button" (click)="onNoClick()">Cancelar</button>
+        </div>
+    </form>
+
+</div>

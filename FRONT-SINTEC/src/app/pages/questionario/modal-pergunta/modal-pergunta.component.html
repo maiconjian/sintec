@@ -1,0 +1,37 @@
+<h1 style="margin-bottom: 15px;" mat-dialog-title>{{titulo}}</h1>
+
+<div style="text-align: left;">
+    <form autocomplete="off" #f="ngForm" >
+        <div mat-dialog-content>
+            <mat-form-field id="input-enunciado" class="input-modal">
+                <mat-label>Enunciado</mat-label>
+                <input name="enunciadoCad" matInput #input [(ngModel)]="data.enunciado" (ngModelChange)="data.enunciado = $event.toUpperCase()" maxlength="200" required>
+            </mat-form-field>
+            <mat-form-field id="input-ordem" class="input-modal">
+                <mat-label>Ordem </mat-label>
+                <input name="ordem" matInput #input type="number" [(ngModel)]="data.ordemApresentacao" min="0" maxlength="3" 
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
+            </mat-form-field>
+            <!-- <mat-form-field id="toggle-obrigatorio"  class="input-modal">
+                <mat-slide-toggle  name="obrigatorio" [(ngModel)]="flagObrigatorio" >Obrigatoria</mat-slide-toggle>
+                <textarea matInput hidden></textarea>
+            </mat-form-field>
+            <mat-form-field id="toggle-foto" class="input-modal">
+                <mat-slide-toggle name="foto" [(ngModel)]="flagFoto">Foto Obrigatoria</mat-slide-toggle>
+                <textarea matInput hidden></textarea>
+            </mat-form-field> -->
+            <mat-form-field id="toggle-multipla-escolha" class="input-modal">
+                <mat-slide-toggle name="multiplaescolha" [(ngModel)]="flagMultiplaEscolha">Multipla Escolha</mat-slide-toggle>
+                <textarea matInput hidden></textarea>
+                <!-- só para não dar erro o  "mat-form-field must contain a MatFormFieldControl." -->
+            </mat-form-field>
+
+        </div>
+        <div mat-dialog-actions>
+            <button  color="primary" mat-raised-button (click)="montarObj()" [mat-dialog-close]="data"
+                [disabled]="!f.valid">Confirmar</button>
+            <button  color="primary" mat-raised-button type="button" (click)="onNoClick()">Cancelar</button>
+        </div>
+    </form>
+
+</div>

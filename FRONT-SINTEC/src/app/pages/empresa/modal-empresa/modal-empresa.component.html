@@ -1,0 +1,90 @@
+<h1  style="margin-bottom: 15px;" mat-dialog-title>{{titulo}}</h1>
+<!-- <div mat-dialog-content>
+    <div style="text-align: left;">
+        <form autocomplete="off" #f="ngForm" (ngSubmit)="merge()">
+            <mat-form-field id="input-cnpj" class="input-modal">
+                <mat-label>CNPJ</mat-label>
+                <input name="cnpj" matInput #input [brmasker]="{person: true}" [(ngModel)]="data.cnpj">
+            </mat-form-field>
+
+            <mat-form-field id="input-nome" class="input-modal">
+                <mat-label>Nome</mat-label>
+                <input name="nome" matInput #input [(ngModel)]="data.nome">
+            </mat-form-field>
+
+            <mat-form-field id="input-nome-fantasia" class="input-modal">
+                <mat-label>Nome Fantasia</mat-label>
+                <input name="nomeFantasia" matInput #input [(ngModel)]="data.nomeFantasia">
+            </mat-form-field>
+
+            <mat-form-field id="input-cidade" class="input-modal">
+                <mat-label>Cidade</mat-label>
+                <input name="cidade" matInput #input [(ngModel)]="data.cidade">
+            </mat-form-field>
+
+            <mat-form-field id="input-endereco" class="input-modal">
+                <mat-label>Endereco</mat-label>
+                <input name="endereco" matInput #input [(ngModel)]="data.endereco">
+            </mat-form-field>
+
+            <mat-form-field id="input-insc-municipal" class="input-modal">
+                <mat-label>Inscricao. Municipal</mat-label>
+                <input name="ins-municipal" matInput #input type="number" [(ngModel)]="data.inscricaoMunicipal">
+            </mat-form-field>
+            
+        </form>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button  mat-raised-button type="submit">Confirmar</button>
+    <button  mat-raised-button type="button">Cancelar</button>
+</div> -->
+
+<div style="text-align: left;">
+    <form autocomplete="off" #f="ngForm">
+        <div mat-dialog-content>
+    
+
+            <mat-form-field id="input-nome" class="input-modal">
+                <mat-label>Nome</mat-label>
+                <input name="nome" matInput #input [(ngModel)]="data.nome" maxlength="200"  (ngModelChange)="data.nome = $event.toUpperCase()" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-nome-fantasia" class="input-modal">
+                <mat-label>Nome Fantasia</mat-label>
+                <input name="nomeFantasia" matInput #input [(ngModel)]="data.nomeFantasia"  (ngModelChange)="data.nomeFantasia = $event.toUpperCase()" maxlength="100" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-cnpj" class="input-modal">
+                <mat-label>CNPJ</mat-label>
+                <input name="cnpj" matInput #input [brmasker]="{person: true}" [(ngModel)]="data.cnpj" maxlength="18" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-cidade" class="input-modal">
+                <mat-label>Cidade</mat-label>
+                <input name="cidade" matInput #input [(ngModel)]="data.cidade" maxlength="100" required>
+            </mat-form-field>
+
+            <mat-form-field id="input-bairro" class="input-modal">
+                <mat-label>Bairro</mat-label>
+                <input name="bairro" matInput #input [(ngModel)]="data.bairro" maxlength="100">
+            </mat-form-field>
+
+            <mat-form-field id="input-endereco" class="input-modal">
+                <mat-label>Endereco</mat-label>
+                <input name="endereco" matInput #input [(ngModel)]="data.endereco" maxlength="150">
+            </mat-form-field>
+
+            <mat-form-field id="input-insc-municipal" class="input-modal">
+                <mat-label>Inscricao. Municipal</mat-label>
+                <input name="ins-municipal" matInput #input type="number" [(ngModel)]="data.inscricaoMunicipal"  min="0" maxlength="20" 
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            </mat-form-field>
+        </div>
+        <div mat-dialog-actions>
+            <button  color="primary" mat-raised-button [mat-dialog-close]="data"  [disabled]="!f.valid">Confirmar</button>
+            <button  color="primary" mat-raised-button type="button" (click)="onNoClick()">Cancelar</button>
+        </div>
+    </form>
+
+</div>

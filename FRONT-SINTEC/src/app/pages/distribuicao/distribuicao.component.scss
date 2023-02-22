@@ -1,0 +1,72 @@
+$font-size-table: 11px;
+
+.font-column{
+    font-size: $font-size-table !important;
+    font-weight: bold;
+}
+
+
+#tab-left {
+    float: left;
+    margin-left: 10px;
+    width: 49%;
+}
+
+.mat-column-select {
+    width: 8%;
+}
+
+.mat-column-codigo {
+    width: 17%;    
+}
+
+.mat-column-colaborador {
+    width: 12%;
+}
+
+.mat-column-datasolicitacao {
+    width: 15%;
+}
+
+.mat-column-dataprogramada {
+    width: 12%;
+}
+
+#tab-right {
+    float: right;
+    margin-right: 10px;
+    width: 49%;
+}
+
+.mat-column-codigoDistribuido {
+    width: 15%;    
+}
+
+.mat-column-colaboradorDistribuido {
+    width: 30%;
+}
+
+.mat-column-dataprogramadaDistribuido {
+    width: 10%;
+}
+
+.mat-column-flagassociadodistribuido {
+    width: 10%;
+}
+
+.mat-column-opcaoDistribuido {
+    width: 12%;
+}
+
+@media screen and (max-width: 1000px) {
+    #tab-left{
+        width: 100% !important;
+        margin: 30px auto !important;
+    }
+
+    #tab-right {
+        width: 100% !important;
+        margin: 30px auto !important;
+        
+    }
+}

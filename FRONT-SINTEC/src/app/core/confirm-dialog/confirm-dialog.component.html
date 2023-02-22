@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Você tem certeza?</h1>
+<div mat-dialog-content id="content">
+    Confirmar ação
+</div>
+<div mat-dialog-actions id="action">
+    <button class="btn" mat-raised-button (click)="confirm()" [mat-dialog-close]="data">Sim</button>
+    <button class="btn" mat-raised-button type="button" (click)="onNoClick()" [mat-dialog-close]="data">Não</button>
+</div>

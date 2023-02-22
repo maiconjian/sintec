@@ -1,0 +1,57 @@
+<!-- <div id="lista">
+    <ul>
+        <li *ngFor="let item of images"  (click)="teste()">
+            <figure class="foto">
+                    <img src="{{item.previewImageSrc}}" >
+                <figcaption>
+                    <p>{{item.titulo}}</p>
+                    <p>{{item.observacao}}</p>
+                </figcaption>
+            </figure>
+        </li>
+        
+    </ul>
+</div> -->
+
+<mat-grid-list cols="2" rowHeight="1:1">
+    <mat-grid-tile>
+        <div id="foto" >
+            <div *ngIf="images.length > 0">
+                <img [src]="images[indexFoto].previewImageSrc" alt="_IMAGEM NAO PODE SER CARREGADA CORRETAMENTE!" *ngIf="images[indexFoto].previewImageSrc" />
+            </div>
+            <div *ngIf="images.length == 0">
+                <div>
+                    <img src="../../../../assets/img/sem_foto.png" alt="_IMAGEM NAO PODE SER CARREGADA CORRETAMENTE!" width="480" height="455" />
+                </div>
+            </div>
+            <div class="btn-foto">
+                <button mat-mini-fab color="primary" (click)="backPhoto()" [disabled]="indexFoto == 0">
+                    <mat-icon>arrow_circle_left</mat-icon>
+                </button>
+                <mat-label class="lbl-index-photo">{{ indexFoto+1 }} de {{ images.length }}</mat-label>
+                <button mat-mini-fab color="primary" (click)="nextPhoto()">
+                    <mat-icon>arrow_circle_right</mat-icon>
+                </button>
+            </div>
+    </div>
+
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <div id="info">
+            <mat-form-field style="width: 100%; padding: 5px;">
+                    <mat-label>Titulo Questionario</mat-label>
+                    <input matInput type="text"  name="titulo"  value="{{titulo}}" readonly>
+            </mat-form-field>
+            <mat-form-field style=" width: 100%;">
+                <mat-label>Observação</mat-label>
+                <textarea matInput placeholder="Observação" rows="6"  readonly></textarea>
+            </mat-form-field>
+        </div>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+
+
+
+
+

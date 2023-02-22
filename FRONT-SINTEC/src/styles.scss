@@ -1,0 +1,118 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.pagina{
+    margin-top: 5px;
+}
+
+.input-filtro {
+    padding: 10px !important;
+    width: 250px !important;
+}
+
+// .input-field{
+//     width: 100%;
+//     padding-left: 10px;
+//     padding-right: 10px;
+// }
+
+.input-search{
+    width: 97% !important;
+    height: 40px !important;
+    padding-left: 5px !important;
+}
+
+.input-modal{
+    padding: 10px;
+}
+
+
+// snackbar config
+.sucesso-snackbar{
+    background: #E5F8F1 !important;
+    color: #33B188 !important;
+    border-left: 8px solid #33B188;
+}
+
+.alerta-snackbar{
+    background: #FDF2E4 !important;
+    color: #CF943A !important;
+    border-left: 8px solid #CF943A;
+}
+
+.erro-snackbar{
+    background: #FDE8E8 !important;
+    color: #FD6767 !important;
+    border-left: 8px solid #FD6767;
+}
+
+.info-snackbar{
+    background: #E9EAFE !important;
+    color: #767AFE !important;
+    border-left: 8px solid #767AFE;
+}
+// ================
+
+.mat-raised-button {
+    // background-color: #636fbe !important;
+    // color: white !important;
+    margin:5px !important;
+}
+.btn-opcao{
+    margin-top: 1% !important;
+    border: none !important;
+    background: none !important;
+    color:  #636fbe !important;
+    box-shadow: none !important;
+}
+
+// css table
+#div-tab{
+    width: 99%;
+    margin: auto;
+}
+
+table{
+    width: 100%;
+}
+
+.mat-header-row, .mat-row {
+    height: 30px !important;
+}
+
+.mat-header-cell{
+    background-color: #f5f5f5 !important;
+    font-weight: bold;
+    // color: white !important;
+}
+// ==========
+
+// cor de transição quando clica no checkbox
+.mat-checkbox-ripple .mat-ripple-element {
+    background-color: #636fbe !important;
+  }
+  
+//  cor de background quando esta selecionado
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #636fbe !important;
+  }
+  
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #636fbe !important;
+  }
+
+//   slid togle
+// cor da barra selecionada 
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: rgb(140, 149, 221);
+}
+// circulo da ponta
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #636fbe;
+}
+// efeito do click
+.mat-slide-toggle.mat-checked .mat-slide-toggle-ripple .mat-ripple-element {
+    background-color: #636fbe;
+}

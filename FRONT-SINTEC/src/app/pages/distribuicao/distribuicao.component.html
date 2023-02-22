@@ -1,0 +1,127 @@
+<app-spinner [loading]="loading"></app-spinner>
+
+<div [hidden]="loading">
+  <app-header></app-header>
+  <div style="text-align: left;" class="pagina">
+    <form autocomplete="off" #f="ngForm" (ngSubmit)="pesquisar();carregarUsuario();limparDistribuidoSelecionado();">
+      <mat-form-field id="input-referencia" class="input-modal">
+        <mat-label>Mês Referência</mat-label>
+        <input name="admissaoCad" placeholder="mm/aaaa" [brmasker]="{mask:'00/0000', len:7}" minlength="7" matInput
+          #input [(ngModel)]="dataRef" required>
+      </mat-form-field>
+      <mat-form-field class="input-filtro">
+        <mat-label>Regional</mat-label>
+        <mat-select name="regionalFilter" [(ngModel)]="filter.idRegional"
+          (selectionChange)="carregarTipoServico()" required>
+          <mat-option *ngFor="let regional of listaRegionalCarregado" [value]="regional.value">
+            {{regional.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="input-filtro" style="width: 180px !important;">
+        <mat-label>Tipo Serviço</mat-label>
+        <mat-select name="tipoServicoCad" [(ngModel)]="filter.idTipoServico" required>
+          <mat-option *ngFor="let tipoServico of listaTipoServicoCarregado" [value]="tipoServico.value">
+            {{tipoServico.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button  color="primary" mat-raised-button type="button" (click)="limparFiltro()">Limpar</button>
+      <button  color="primary" mat-raised-button type="submit" [disabled]="!f.valid">Pesquisar</button>
+    </form>
+  </div>
+
+  <div class="mat-elevation-z8" id="tab-left">
+    <form autocomplete="off" #fDistribuir="ngForm" (ngSubmit)="pesquisar()">
+      <mat-form-field class="input-filtro">
+        <mat-label>Usuario</mat-label>
+        <mat-select name="colaborador" [(ngModel)]="usuario.id" (selectionChange)="listaDistribuidoUsuario()">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let usuario of listaUsuarioCarregado" [value]="usuario.value">
+            {{usuario.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button  color="primary" mat-raised-button type="button" 
+      [disabled]="usuario.id ==null || usuario.id == undefined || selection.selected.length == 0" (click)="distribuirServico()">Atribuir</button>
+    </form>
+
+
+    <table mat-table [dataSource]="dataSourceServicoDistribuir">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row.id) : null"
+            [checked]="selection.isSelected(row.id)" [aria-label]="checkboxLabel(row.id)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="codigo">
+        <th mat-header-cell *matHeaderCellDef> CODIGO </th>
+        <td mat-cell *matCellDef="let element" class="font-column"> {{element.codigo}} </td>
+      </ng-container>
+      <ng-container matColumnDef="nomecolaborador">
+        <th mat-header-cell *matHeaderCellDef>COLABORADOR</th>
+        <td mat-cell *matCellDef="let element" class="font-column"> {{element.nomeColaborador}} </td>
+      </ng-container>
+      <ng-container matColumnDef="datasolicitacao">
+        <th mat-header-cell *matHeaderCellDef>SOLICITACAO</th>
+        <td mat-cell *matCellDef="let element" class="font-column"> {{element.dataSolicitacao | date:'dd/MM/yyyy'}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="dataprogramada">
+        <th mat-header-cell *matHeaderCellDef>PROGRAMADA</th>
+        <td mat-cell *matCellDef="let element" class="font-column"> {{element.dataProgramada | date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsServicoDistribuir"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsServicoDistribuir;"></tr>
+    </table>
+    <mat-paginator #paginatorDistribuir [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
+  </div>
+
+  <div class="mat-elevation-z8" id="tab-right">
+    <table mat-table [dataSource]="dataSourceServicoDistribuido">
+      <ng-container matColumnDef="localidadedistribuido">
+        <th mat-header-cell *matHeaderCellDef> LOCALIDADE </th>
+        <td mat-cell *matCellDef="let element" class="font-column"> {{element.nomeLocalidade}} </td>
+      </ng-container>
+      <ng-container matColumnDef="codigodistribuido">
+        <th mat-header-cell *matHeaderCellDef> CODIGO </th>
+        <td mat-cell *matCellDef="let element" class="font-column"> {{element.codigo}} </td>
+      </ng-container>
+      <ng-container matColumnDef="nomecolaboradordistribuido">
+        <th mat-header-cell *matHeaderCellDef>COLABORADOR</th>
+        <td mat-cell *matCellDef="let element" class="font-column"> {{element.nomeColaborador}} </td>
+      </ng-container>
+      <ng-container matColumnDef="dataprogramadadistribuido">
+        <th mat-header-cell *matHeaderCellDef>PROGRAMADA</th>
+        <td mat-cell *matCellDef="let element" class="font-column"> {{element.dataProgramada | date:'dd/MM/yyyy'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="flagassociadodistribuido">
+        <th mat-header-cell *matHeaderCellDef>ASSOCIADO</th>
+        <td mat-cell *matCellDef="let element" class="font-column"> {{element.flagAssociado == 0 ? 'DISTRIBUIDO' : element.flagAssociado == 1 ? 'LIBERADO' : element.flagAssociado == 2 ? 'BAIXADO' :''  }} </td>
+      </ng-container>
+      <ng-container matColumnDef="opcaodistribuido">
+        <th mat-header-cell *matHeaderCellDef> OPCAO </th>
+        <td mat-cell *matCellDef="let element"> 
+            <button class="btn-opcao" color="primary" 
+            matTooltip="Desassociar"
+            matTooltipPosition="left"
+            (click)="confirmDialog(element)">
+                <mat-icon >remove</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsServicoDistribuido"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsServicoDistribuido;"></tr>
+    </table>
+    <mat-paginator #paginatorDistribuido [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>

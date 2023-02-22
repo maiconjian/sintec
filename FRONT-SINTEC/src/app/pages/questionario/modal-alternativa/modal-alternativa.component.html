@@ -1,0 +1,39 @@
+<h1 style="margin-bottom: 15px;" mat-dialog-title>{{titulo}}</h1>
+
+<div style="text-align: left;">
+    <form autocomplete="off" #f="ngForm" >
+        <div mat-dialog-content>
+            <mat-form-field id="input-descricao" class="input-modal">
+                <mat-label>Descricao</mat-label>
+                <input name="descricaoCad" matInput #input [(ngModel)]="data.descricao" (ngModelChange)="data.descricao = $event.toUpperCase()" maxlength="300" required>
+            </mat-form-field>
+            <mat-form-field id="input-ordem" class="input-modal">
+                <mat-label>Ordem </mat-label>
+                <input name="ordem" matInput #input type="number" [(ngModel)]="data.ordemApresentacao"  min="0" maxlength="3" 
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
+            </mat-form-field>
+            <mat-form-field id="toggle-nconf"  class="input-modal">
+                <mat-slide-toggle  name="flagNconf" [(ngModel)]="flagNconf" >Não Conforme</mat-slide-toggle>
+                <textarea matInput hidden></textarea>
+                <!-- só para não dar erro o  "mat-form-field must contain a MatFormFieldControl." -->
+            </mat-form-field>
+            <mat-form-field id="select-prioridade"  class="input-modal">
+                <mat-label>Prioridade</mat-label>
+                <mat-select name="prioridadeCad" [(ngModel)]="data.prioridadeNconf" >
+                    <mat-option *ngFor="let prioridade of listaPrioridade" [value]="prioridade.value">
+                        {{prioridade.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> 
+            <mat-form-field id="input-recomendacao" class="input-modal">
+                <mat-label> Recomendacao</mat-label>
+                <input name="recomendacao" matInput #input  [(ngModel)]="data.recomendacaoNconf" (ngModelChange)="data.recomendacaoNconf = $event.toUpperCase()" maxlength="300">
+            </mat-form-field>
+        </div>
+        <div mat-dialog-actions>
+            <button  color="primary" mat-raised-button (click)="montarObj()" [mat-dialog-close]="data"
+                [disabled]="!f.valid">Confirmar</button>
+            <button  color="primary" mat-raised-button type="button" (click)="onNoClick()">Cancelar</button>
+        </div>
+    </form>
+</div>

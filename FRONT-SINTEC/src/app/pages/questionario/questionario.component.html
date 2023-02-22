@@ -1,0 +1,210 @@
+<app-spinner [loading]="loading"></app-spinner>
+<div [hidden]="loading">
+    <app-header></app-header>
+    <div style="text-align: left;" class="pagina">
+        <form autocomplete="off" #f="ngForm" (ngSubmit)="pesquisar()">
+            <mat-form-field class="input-filtro">
+                <mat-label>Contrato</mat-label>
+                <mat-select name="regionalFilter" [(ngModel)]="filter.idContrato"
+                    (selectionChange)="carregarTipoServico()" required>
+                    <mat-option *ngFor="let contrato of listaContratoCarregado" [value]="contrato.value">
+                        {{contrato.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="input-filtro" style="width: 180px !important;">
+                <mat-label>Tipo Serviço</mat-label>
+                <mat-select name="tipoServicoCad" [(ngModel)]="filter.idTipoServico" required>
+                    <mat-option *ngFor="let tipoServico of listaTipoServicoCarregado" [value]="tipoServico.value">
+                        {{tipoServico.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="input-filtro" style="width: 100px !important;">
+                <mat-label>Situacao</mat-label>
+                <mat-select name="ativoFilter" [(ngModel)]="filter.ativo" required>
+                    <mat-option *ngFor="let situacao of listaSituacaoCarregado" [value]="situacao.value">
+                        {{situacao.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button  color="primary" mat-raised-button type="button" (click)="limparFiltro()">Limpar</button>
+            <button  color="primary" mat-raised-button type="submit" [disabled]="!f.valid">Pesquisar</button>
+            <button  color="primary" mat-raised-button type="button" (click)="novoQuestionario()"
+                [disabled]="indexTabs > 0">Novo</button>
+        </form>
+    </div>
+    <div>
+        <mat-tab-group mat-align-tabs="start" selectedIndex="{{indexTabs}}">
+            <mat-tab label="QUESTIONARIOS" [disabled]="true">
+                <div class="mat-elevation-z8" id="div-tab">
+                    <table mat-table name="tab1" #tab1 [dataSource]="dataSourceQuestionario">
+                        <ng-container matColumnDef="ordem-questionario">
+                            <th mat-header-cell *matHeaderCellDef> ORDEM</th>
+                            <td mat-cell *matCellDef="let element"> {{element.ordemApresentacao}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="titulo-questionario">
+                            <th mat-header-cell *matHeaderCellDef> TITULO QUESTIONARIO </th>
+                            <td mat-cell *matCellDef="let element"> {{element.titulo}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="opcao-questionario">
+                            <th mat-header-cell *matHeaderCellDef> OPCAO </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button class="btn-opcao" name="btn-edit-questionario" color="primary" matTooltip="Alterar" matTooltipPosition="left"
+                                    (click)="editarQuestionario(element)" [hidden]="element.ativo == 0">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button class="btn-opcao" name="btn-ativo-pergunta" (click)="confirmDialog(element)"
+                                matTooltip="{{element.ativo == 1 ? 'Desativar':'Ativar'}}"
+                                matTooltipPosition="left">
+                                <mat-icon *ngIf="element.ativo == 1 ? false: true">done_outline</mat-icon>
+                                <mat-icon *ngIf="element.ativo == 0 ? false: true">close</mat-icon>
+                            </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsQuestionario"></tr>
+                        <tr mat-row 
+                        (click)="listaPerguntaQuestionario(row.id,row.titulo)"
+                            [class.row-is-clicked]="idQuestionarioSelecionado == row.id"
+                            *matRowDef="let row; columns: displayedColumnsQuestionario;"></tr>
+                    </table>
+                    <mat-paginator #paginatorQuestionario [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>
+                    </mat-paginator>
+                </div>
+            </mat-tab>
+            <mat-tab label="PERGUNTAS" [disabled]="true">
+                <div class="mat-elevation-z8" id="div-tab">
+                    <div>
+                        <div class="titulo-tab">
+                            <h1 style=" margin-bottom: 1px;">{{tituloQuestionarioTab}}</h1>
+                        </div>
+                        <div class="btn-voltar">
+                            <button color="primary" mat-raised-button  matTooltip="Novo" (click)="novoPergunta();"
+                                matTooltipPosition="right">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                            <button color="primary" mat-raised-button  matTooltip="Voltar" (click)="voltar();"
+                                matTooltipPosition="right">
+                                <mat-icon>arrow_back</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <table mat-table name="tab2"  #tab2 [dataSource]="dataSourcePergunta">
+                        <ng-container matColumnDef="ordem-pergunta">
+                            <th mat-header-cell *matHeaderCellDef> ORDEM</th>
+                            <td mat-cell *matCellDef="let element"> {{element.ordemApresentacao }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="enunciado-pergunta">
+                            <th mat-header-cell *matHeaderCellDef> ENUNCIADO </th>
+                            <td mat-cell *matCellDef="let element"> {{element.enunciado}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="foto-pergunta">
+                            <th mat-header-cell *matHeaderCellDef> FOTO</th>
+                            <td mat-cell *matCellDef="let element"> {{element.flagFoto == 1 ? 'SIM':'NAO'}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="obrigatorio-pergunta">
+                            <th mat-header-cell *matHeaderCellDef> OBRIGATORIO</th>
+                            <td mat-cell *matCellDef="let element"> {{element.flagObrigatorio == 1 ? 'SIM':'NAO'}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="multipla-escolha-pergunta">
+                            <th mat-header-cell *matHeaderCellDef> MULTIPLA ESCOLHA</th>
+                            <td mat-cell *matCellDef="let element"> {{element.flagMultiplaEscolha == 1 ? 'SIM':'NAO'}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="opcao-pergunta">
+                            <th mat-header-cell *matHeaderCellDef> OPCAO </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button class="btn-opcao"  name="btn-edit-pergunta" color="primary" matTooltip="Alterar" matTooltipPosition="left"
+                                    (click)="editarPergunta(element)" [hidden]="element.ativo == 0">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button class="btn-opcao" name="btn-ativo-pergunta" (click)="confirmDialog(element)"
+                                    matTooltip="{{element.ativo == 1 ? 'Desativar':'Ativar'}}"
+                                    matTooltipPosition="left">
+                                    <mat-icon *ngIf="element.ativo == 1 ? false: true">done_outline</mat-icon>
+                                    <mat-icon *ngIf="element.ativo == 0 ? false: true">close</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsPergunta"></tr>
+                        <tr mat-row 
+                            (click)="listaAlternativaPergunta(row);perguntaSelecionada = row"
+                            [class.row-is-disabled-pergunta]="row.ativo == 0"
+                            [class.row-is-clicked]="idPerguntaSelecionado == row.id"
+                            *matRowDef="let row; columns: displayedColumnsPergunta;"></tr>
+                    </table>
+                    <mat-paginator #paginatorQuestionario [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>
+                    </mat-paginator>
+                </div>
+            </mat-tab>
+            <mat-tab label="ALTERNATIVAS" [disabled]="true">
+                <div class="mat-elevation-z8" id="div-tab">
+                    <div>
+                        <div class="titulo-tab">
+                            <h1 style=" margin-bottom: 1px;">{{enunciadoPerguntaTab}}</h1>
+                        </div>
+                        <div class="btn-voltar">
+                            <button  color="primary" mat-raised-button  matTooltip="Novo" (click)="novoAlternativa()"
+                                matTooltipPosition="right">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                            <button color="primary" mat-raised-button  matTooltip="Voltar" (click)="voltar();"
+                                matTooltipPosition="right">
+                                <mat-icon>arrow_back</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <table mat-table name="tab3" #tab3 [dataSource]="dataSourceAlternativa">
+                        <ng-container matColumnDef="ordem-alternativa">
+                            <th mat-header-cell *matHeaderCellDef> ORDEM</th>
+                            <td mat-cell *matCellDef="let element"> {{element.ordemApresentacao }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="descricao-alternativa">
+                            <th mat-header-cell *matHeaderCellDef> DESCRICAO </th>
+                            <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="flagnconf-alternativa">
+                            <th mat-header-cell *matHeaderCellDef> NAO CONFORMIDADE</th>
+                            <td mat-cell *matCellDef="let element"> {{element.flagNconf == 1 ? 'SIM':'NAO'}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="prioridade-alternativa">
+                            <th mat-header-cell *matHeaderCellDef> PRIORIDADE</th>
+                            <td mat-cell *matCellDef="let element"> {{element.prioridadeNconf == 1 ? 'BAIXO':
+                                element.prioridadeNconf == 2 ? 'MEDIO':element.prioridadeNconf == 3 ? 'ALTO':
+                                element.prioridadeNconf == 0 ? '' : null}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="recomendacao-alternativa">
+                            <th mat-header-cell *matHeaderCellDef> RECOMENDACAO</th>
+                            <td mat-cell *matCellDef="let element"> {{element.recomendacaoNconf}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="opcao-alternativa">
+                            <th mat-header-cell *matHeaderCellDef> OPCAO </th>
+                            <td mat-cell *matCellDef="let element">
+                                <button class="btn-opcao" color="primary" matTooltip="Alterar" matTooltipPosition="left"
+                                    (click)="editarAlternativa(element)" [hidden]="element.ativo == 0">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button class="btn-opcao" (click)="confirmDialog(element)"
+                                matTooltip="{{element.ativo == 1 ? 'Desativar':'Ativar'}}"
+                                matTooltipPosition="left">
+                                <mat-icon *ngIf="element.ativo == 1 ? false: true">done_outline</mat-icon>
+                                <mat-icon *ngIf="element.ativo == 0 ? false: true">close</mat-icon>
+                            </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsAlternativa"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsAlternativa;"
+                            [class.row-is-disabled-alternativa]="row.ativo == 0"></tr>
+                    </table>
+                    <mat-paginator #paginatorAlternativa [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>
+                    </mat-paginator>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

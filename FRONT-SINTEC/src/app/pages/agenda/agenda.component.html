@@ -1,0 +1,103 @@
+<app-spinner [loading]="loading"></app-spinner>
+<div [hidden]="loading">
+    <app-header></app-header>
+    <div style="text-align: left;" class="pagina">
+        <form autocomplete="off" #f="ngForm" (ngSubmit)="pesquisar()">
+            <mat-form-field id="input-ref" class="input-modal">
+                <mat-label>Ref.</mat-label>
+                <input name="admissaoCad" placeholder="mm/aaaa" [brmasker]="{mask:'99/9999', len:7}" minlength="7"
+                    matInput #input [(ngModel)]="dataAnoMesRef" maxlength="7" required>
+            </mat-form-field>
+
+            <mat-form-field class="input-filtro">
+                <mat-label>Regional</mat-label>
+                <mat-select name="regionalFilter" [(ngModel)]="filter.idRegional"
+                    (selectionChange)="carregarTipoServico()" required>
+                    <mat-option *ngFor="let regional of listaRegionalCarregado" [value]="regional.value">
+                        {{regional.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="input-filtro" style="width: 180px !important;">
+                <mat-label>Tipo Serviço</mat-label>
+                <mat-select name="tipoServicoCad" [(ngModel)]="filter.idTipoServico" required>
+                    <mat-option *ngFor="let tipoServico of listaTipoServicoCarregado" [value]="tipoServico.value">
+                        {{tipoServico.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="input-filtro" style="width: 100px !important;">
+                <mat-label>Situacao</mat-label>
+                <mat-select name="ativoFilter" [(ngModel)]="filter.ativo" required>
+                    <mat-option *ngFor="let situacao of listaSituacaoCarregado" [value]="situacao.value">
+                        {{situacao.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button  color="primary"  mat-raised-button type="button" (click)="limparFiltro()">Limpar</button>
+            <button  color="primary"  mat-raised-button type="submit" [disabled]="!f.valid">Pesquisar</button>
+            <button  color="primary"  mat-raised-button type="button" (click)="openDialogAgendamento()">Agendar</button>
+        </form>
+    </div>
+
+    <div class="mat-elevation-z8" id="div-tab">
+        <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="codigo">
+                <th mat-header-cell *matHeaderCellDef> CODIGO </th>
+                <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+            </ng-container>
+            <ng-container matColumnDef="colaborador">
+                <th mat-header-cell *matHeaderCellDef>COLABORADOR</th>
+                <td mat-cell *matCellDef="let element"> {{element.nomeColaborador}} </td>
+            </ng-container>
+            <ng-container matColumnDef="placa">
+                <th mat-header-cell *matHeaderCellDef>VEICULO</th>
+                <td mat-cell *matCellDef="let element"> {{element.placa}} </td>
+            </ng-container>
+            <ng-container matColumnDef="imovel">
+                <th mat-header-cell *matHeaderCellDef>LOCAL</th>
+                <td mat-cell *matCellDef="let element"> {{element.nomeImovel}} </td>
+            </ng-container>
+            <ng-container matColumnDef="data-solicitacao">
+                <th mat-header-cell *matHeaderCellDef>SOLICITACAO</th>
+                <td mat-cell *matCellDef="let element"> {{element.dataSolicitacao | date:'dd/MM/yyyy'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="data-programada">
+                <th mat-header-cell *matHeaderCellDef>PROGRAMADA</th>
+                <td mat-cell *matCellDef="let element"> {{element.dataProgramada | date:'dd/MM/yyyy'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="opcao">
+                <th mat-header-cell *matHeaderCellDef> OPCAO </th>
+                <td mat-cell *matCellDef="let element">
+                    <button class="btn-opcao" color="primary" matTooltip="Alterar" matTooltipPosition="left"
+                        (click)="editar(element.id)" [hidden]="element.ativo == 0">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button class="btn-opcao" (click)="confirmDialog(element.id)"
+                        matTooltip="{{element.ativo == 1 ? 'Desativar':'Ativar'}}" matTooltipPosition="left">
+                        <mat-icon *ngIf="element.ativo == 1 ? false: true">done_outline</mat-icon>
+                        <mat-icon *ngIf="element.ativo == 0 ? false: true">close</mat-icon>
+                    </button>
+                    <!-- <button class="btn-opcao" name="btn-edit-questionario" color="primary" matTooltip="Detalhado"
+                        matTooltipPosition="left">
+                        <mat-icon>details</mat-icon>
+                    </button>
+                    <button class="btn-opcao" name="btn-edit-questionario" color="primary" matTooltip="Mapa"
+                        matTooltipPosition="left" (click)="getCoordenadas(element.id)">
+                        <mat-icon>map</mat-icon>
+                    </button>
+                    <button class="btn-opcao" name="btn-edit-questionario" color="primary" matTooltip="Laudo"
+                        matTooltipPosition="left">
+                        <mat-icon>picture_as_pdf</mat-icon>
+                    </button> -->
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
