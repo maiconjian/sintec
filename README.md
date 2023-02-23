@@ -1,14 +1,22 @@
-# sintec
+# SINTEC
 
-Sistema integrado de inspeção.
+SISTEMA INTEGRADO DE INSPEÇÃO
 
-sistema para inspeções para propriedades da empresa.
+Sistema para inspeções de propriedades da empresa, focada em veiculos, instalações,funcionarios e documentação, podendo haver varios tipos de inspeção diferentes por categoria.
 
-funcionalidades:
+PRINCIPAIS FUNCIONALIDADES:
+ 
+ - Cadastrar regiões usuarios, pessoas, veiculos, perguntas e alternativas.
+ - Agendar inspeções.
+ - Distribuir inspeções para serem realizadas.
+ - Administrar retornor.
+ - Acompanhar execução.
+ - Analisar e ajustar no caso de não conformidades.
+ - Gerar laudo das inspeções.
+ 
+TECNOLOGIAS UTILIZADAS NO PROJETO:
 
- - cadastrar regiões usuarios, pessoas, veiculos, perguntas e alternativas.
- - agendar inspeções.
- - distribuir inspeções para serem realizadas.
- - administrar retornor.
- - acompanhar execução.
- - analisar e ajustar no caso de não conformidades.
+ - JAVA SPRING BOOT
+ - ANGULAR + ANGULAR MATERIAL UI
+ - BD SQL SERVER
+ - FLUTTER (MOBILE)
