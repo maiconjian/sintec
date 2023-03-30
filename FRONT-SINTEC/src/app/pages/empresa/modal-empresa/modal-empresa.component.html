@@ -1,45 +1,4 @@
 <h1  style="margin-bottom: 15px;" mat-dialog-title>{{titulo}}</h1>
-<!-- <div mat-dialog-content>
-    <div style="text-align: left;">
-        <form autocomplete="off" #f="ngForm" (ngSubmit)="merge()">
-            <mat-form-field id="input-cnpj" class="input-modal">
-                <mat-label>CNPJ</mat-label>
-                <input name="cnpj" matInput #input [brmasker]="{person: true}" [(ngModel)]="data.cnpj">
-            </mat-form-field>
-
-            <mat-form-field id="input-nome" class="input-modal">
-                <mat-label>Nome</mat-label>
-                <input name="nome" matInput #input [(ngModel)]="data.nome">
-            </mat-form-field>
-
-            <mat-form-field id="input-nome-fantasia" class="input-modal">
-                <mat-label>Nome Fantasia</mat-label>
-                <input name="nomeFantasia" matInput #input [(ngModel)]="data.nomeFantasia">
-            </mat-form-field>
-
-            <mat-form-field id="input-cidade" class="input-modal">
-                <mat-label>Cidade</mat-label>
-                <input name="cidade" matInput #input [(ngModel)]="data.cidade">
-            </mat-form-field>
-
-            <mat-form-field id="input-endereco" class="input-modal">
-                <mat-label>Endereco</mat-label>
-                <input name="endereco" matInput #input [(ngModel)]="data.endereco">
-            </mat-form-field>
-
-            <mat-form-field id="input-insc-municipal" class="input-modal">
-                <mat-label>Inscricao. Municipal</mat-label>
-                <input name="ins-municipal" matInput #input type="number" [(ngModel)]="data.inscricaoMunicipal">
-            </mat-form-field>
-            
-        </form>
-    </div>
-</div>
-<div mat-dialog-actions>
-    <button  mat-raised-button type="submit">Confirmar</button>
-    <button  mat-raised-button type="button">Cancelar</button>
-</div> -->
-
 <div style="text-align: left;">
     <form autocomplete="off" #f="ngForm">
         <div mat-dialog-content>
@@ -62,17 +21,17 @@
 
             <mat-form-field id="input-cidade" class="input-modal">
                 <mat-label>Cidade</mat-label>
-                <input name="cidade" matInput #input [(ngModel)]="data.cidade" maxlength="100" required>
+                <input name="cidade" matInput #input [(ngModel)]="data.cidade" (ngModelChange)="data.cidade = $event.toUpperCase()" maxlength="100" required>
             </mat-form-field>
 
             <mat-form-field id="input-bairro" class="input-modal">
                 <mat-label>Bairro</mat-label>
-                <input name="bairro" matInput #input [(ngModel)]="data.bairro" maxlength="100">
+                <input name="bairro" matInput #input [(ngModel)]="data.bairro" (ngModelChange)="data.bairro = $event.toUpperCase()" maxlength="100">
             </mat-form-field>
 
             <mat-form-field id="input-endereco" class="input-modal">
                 <mat-label>Endereco</mat-label>
-                <input name="endereco" matInput #input [(ngModel)]="data.endereco" maxlength="150">
+                <input name="endereco" matInput #input [(ngModel)]="data.endereco" (ngModelChange)="data.endereco = $event.toUpperCase()" maxlength="150">
             </mat-form-field>
 
             <mat-form-field id="input-insc-municipal" class="input-modal">

@@ -30,7 +30,7 @@ export class UsuarioComponent implements OnInit {
   listaSituacaoCarregado: any[] = [];
   msgAlteracao: string;
 
-  displayedColumns: string[] = ['cpf', 'nome', 'email', 'perfil', 'opcao'];
+  displayedColumns: string[] = ['regional','cpf', 'nome', 'email', 'perfil', 'opcao'];
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 

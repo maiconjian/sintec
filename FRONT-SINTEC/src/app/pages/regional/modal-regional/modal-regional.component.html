@@ -11,7 +11,7 @@
                 </mat-select>
               </mat-form-field>
 
-            <mat-form-field id="input-nome" class="input-modal">
+            <mat-form-field id="input-nome">
                 <mat-label>Nome</mat-label>
                 <input name="nome" matInput #input [(ngModel)]="data.nome" 
                 (ngModelChange)="data.nome = $event.toUpperCase()" maxlength="200" required>

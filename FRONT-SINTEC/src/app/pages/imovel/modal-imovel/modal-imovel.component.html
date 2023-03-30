@@ -4,22 +4,22 @@
         <div mat-dialog-content>
             <mat-form-field id="input-nome" class="input-modal">
                 <mat-label>Nome</mat-label>
-                <input name="nome" matInput #input [(ngModel)]="data.nome" maxlength="200" required>
+                <input name="nome" matInput #input [(ngModel)]="data.nome"  (ngModelChange)="data.nome = $event.toUpperCase()"  maxlength="200" required>
             </mat-form-field>
 
             <mat-form-field id="input-bairro" class="input-modal">
                 <mat-label>Bairro</mat-label>
-                <input name="bairro" matInput #input [(ngModel)]="data.bairro" maxlength="200" required>
+                <input name="bairro" matInput #input [(ngModel)]="data.bairro"   (ngModelChange)="data.bairro = $event.toUpperCase()" maxlength="200" required>
             </mat-form-field>
 
             <mat-form-field id="input-logradouro" class="input-modal">
                 <mat-label>Logradouro</mat-label>
-                <input name="logradouro" matInput #input [(ngModel)]="data.logradouro" maxlength="200">
+                <input name="logradouro" matInput #input [(ngModel)]="data.logradouro"   (ngModelChange)="data.logradouro = $event.toUpperCase()" maxlength="200">
             </mat-form-field>
 
             <mat-form-field id="input-complemento" class="input-modal">
                 <mat-label>Complemento</mat-label>
-                <input name="complemento" matInput #input [(ngModel)]="data.complemento" maxlength="200">
+                <input name="complemento" matInput #input [(ngModel)]="data.complemento"   (ngModelChange)="data.complemento = $event.toUpperCase()" maxlength="200">
             </mat-form-field>
 
             <mat-form-field id="drop-regional" >

@@ -5,7 +5,7 @@
     <form autocomplete="off" #f="ngForm" (ngSubmit)="pesquisar()">
       <mat-form-field class="input-filtro">
         <mat-label>Regional</mat-label>
-        <mat-select name="regionalFilter" [(ngModel)]="filter.idRegional" required>
+        <mat-select name="regionalFilter" [(ngModel)]="filter.idRegional" >
           <mat-option *ngFor="let regional of listaRegionalCarregado" [value]="regional.value">
             {{regional.label}}
           </mat-option>
@@ -42,6 +42,10 @@
 
   <div class="mat-elevation-z8" id="div-tab">
     <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="regional">
+        <th mat-header-cell *matHeaderCellDef> REGIONAL </th>
+        <td mat-cell *matCellDef="let element"> {{element.listaRegional.length == 0 ? '' : element.listaRegional[0].nome}} </td>
+      </ng-container>
       <ng-container matColumnDef="cpf">
         <th mat-header-cell *matHeaderCellDef> CPF </th>
         <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
